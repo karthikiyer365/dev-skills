@@ -1,0 +1,8 @@
+{
+  "name": "dev-skills",
+  "version": "0.1.0",
+  "description": "Skills to help maintain documentation, pre-planning processes, database/repository understanding, and planning with uniformity across code.",
+  "author": {
+    "name": "Karthik Iyer"
+  }
+}

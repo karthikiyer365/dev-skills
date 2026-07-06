@@ -1,0 +1,14 @@
+{
+  "name": "dev-skills",
+  "owner": {
+    "name": "Karthik Iyer"
+  },
+  "plugins": [
+    {
+      "name": "dev-skills",
+      "description": "Skills to help maintain documentation, pre-planning processes, database/repository understanding, and planning with uniformity across code.",
+      "source": "./",
+      "strict": false
+    }
+  ]
+}
