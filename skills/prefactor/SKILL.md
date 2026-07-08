@@ -47,11 +47,28 @@ Documentation
 
 ## When invoked
 
-1. **Find the docs.** Search the target repo for existing documentation (`*.md`, `docs/`, README files, inline architecture comments, schema references, design-system docs). Don't limit to a `docs/` folder — READMEs, ADRs, and schema-reference files all count.
-2. **Classify each doc into exactly one of the 16 leaves.** Use the parenthetical definitions above as the test: read the doc's actual content, not its filename, to decide which side of each split it falls on. If a doc genuinely covers two leaves, split its content across both references rather than forcing one bucket (this preserves MECE — the *doc* can be listed twice, but each *fact* still belongs to one segment).
-3. **Flag gaps.** If a leaf has no matching doc anywhere in the repo, mark it "no dedicated doc — gap" rather than inventing a reference.
-4. **Generate the output file** at `docs/PREFACTOR.md` (create `docs/` if absent) with one `##` section per leaf segment, in the order shown above, each containing exactly three subsections (template below).
+1. **Find every file that belongs, not just the obvious one.** Search the whole repo, not just `docs/` — READMEs, ADRs, schema-reference files, inline architecture comments, design-system docs, config files that define contracts (OpenAPI/GraphQL schemas, Prisma schema, component prop types). A segment with 4 relevant files gets 4 bullets, not 1.
+2. **Classify each file into exactly one of the 16 leaves.** Use the parenthetical definitions above as the test: read the file's actual content, not its filename. If a file genuinely covers two leaves, list it in both (this preserves MECE — the *file* can appear twice, but each *fact* still belongs to one segment).
+3. **Flag gaps.** If a leaf has no matching file anywhere in the repo, mark it "no dedicated doc — gap" rather than inventing a reference.
+4. **Generate the output file** at `docs/PREFACTOR.md` (create `docs/` if absent). Start with a header block (template below), then one `##` section per leaf segment, in the order shown above, each containing exactly three subsections (template below).
 5. **When asked "where do I look before building X"** instead of a full regeneration: identify which 1-2 leaves the task belongs to, answer with just those sections, and name the cross-segment leaf to also check.
+6. **Before finishing any task that touched a listed file**, update its segment in `PREFACTOR.md` in the same change — see Maintenance below. Don't leave the map to drift for someone else to notice.
+
+## Header template (top of the generated file)
+
+```markdown
+# PREFACTOR — Documentation Map
+
+_Generated: <date>, commit <short-sha>. If files under a segment changed after this commit, re-verify that segment before trusting it — see Maintenance._
+
+## Index
+| # | Segment | Files | Status |
+|---|---|---|---|
+| 1 | Feature Definitions | <count> | ok / gap / stale |
+| ... | ... | ... | ... |
+```
+
+The index exists so a fresh session can jump straight to the right `##` section by number instead of reading the whole file top to bottom.
 
 ## Output template (repeat per leaf segment)
 
@@ -60,7 +77,8 @@ Documentation
 
 ### 1. Reference
 - `<path/to/file>` — <knowledge title: the one thing to gather from this file>
-(or: No dedicated doc found — gap. Nearest related doc: `<path>`, if any.)
+- `<path/to/another/file>` — <knowledge title>
+(list every file that belongs to this segment — one bullet each, not a single "main" file. If none: "No dedicated doc found — gap. Nearest related file: `<path>`, if any.")
 
 ### 2. Patterns to learn
 - <pattern or convention someone must internalize before building something in this segment>
@@ -83,8 +101,25 @@ Documentation
 | 13–14 Backend Pipelines | 15–16 Backend Frontend-Connection — exposed endpoints must reflect real domain rules and schema |
 | 15–16 Backend Frontend-Connection | 11–12 Frontend Backend-Connection — same pairing, checked from the other side |
 
+## Maintenance (keep this file honest)
+
+A stale map is worse than no map — it sends the next session or agent to the wrong file with false confidence. Treat `PREFACTOR.md` as enforced, not optional:
+
+- **Update in the same change, not later.** If a task adds, deletes, renames, or meaningfully rewrites a file that belongs in a segment, update that segment's Reference bullets and `Index` count as part of that same task — not a follow-up.
+- **Check staleness before trusting it.** Compare the header's commit against current state. If any file listed under a segment changed since then, re-verify that segment's bullets and knowledge titles before relying on them; mark the Index `Status` column `stale` until re-verified.
+- **Never leave a dead reference.** A bullet pointing at a deleted/renamed file is worse than marking the segment a gap — remove or fix it immediately when noticed, even if that's not the main task.
+- **Full regenerate on explicit request** ("prefactor this repo") or once several segments are marked `stale` — don't let partial patching substitute for a real pass indefinitely.
+
+## Formatting rules
+
+- Bullets only — no prose paragraphs in any subsection.
+- One file per bullet, one pattern per bullet, one cross-check per bullet. Don't merge multiple facts into a single line.
+- Keep each bullet to one line. If something needs more explanation than that, the explanation belongs in the source file, not in `PREFACTOR.md`.
+- Cap "Patterns to learn" at what's actually load-bearing — 3–6 bullets is typical. Needing more usually means the segment is too broad; flag that instead of stuffing the list.
+
 ## What NOT to do
 
 - Don't force a doc into a leaf it doesn't fit just to avoid a "gap" — an honest gap is more useful than a wrong classification.
 - Don't regenerate the full `PREFACTOR.md` for a narrow "where do I look" question — answer with the relevant leaves only.
 - Don't invent documentation content — this skill maps and cross-references what exists; it doesn't author new docs.
+- Don't skip the Maintenance step because the current task "isn't about docs" — if it touched a listed file, updating the map *is* part of the task.
