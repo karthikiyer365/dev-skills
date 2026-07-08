@@ -76,9 +76,12 @@ The index exists so a fresh session can jump straight to the right `##` section 
 ## <N>. <Segment path, e.g. Developer > Backend > Functionality Pipelines > Domain & Business Logic>
 
 ### 1. Reference
-- `<path/to/file>` — <knowledge title: the one thing to gather from this file>
-- `<path/to/another/file>` — <knowledge title>
-(list every file that belongs to this segment — one bullet each, not a single "main" file. If none: "No dedicated doc found — gap. Nearest related file: `<path>`, if any.")
+| File | Covers | Status |
+|---|---|---|
+| `<path/to/file>` | <knowledge title: the one thing to gather from this file> | ok / gap / stale |
+| `<path/to/another/file>` | <knowledge title> | ok / gap / stale |
+
+(list every file that belongs to this segment — one row each, not a single "main" file. If none: single row `| — | No dedicated doc found — gap | gap |`, with nearest related file named in the row below if any.)
 
 ### 2. Patterns to learn
 - <pattern or convention someone must internalize before building something in this segment>
@@ -107,14 +110,14 @@ A stale map is worse than no map — it sends the next session or agent to the w
 
 - **Update in the same change, not later.** If a task adds, deletes, renames, or meaningfully rewrites a file that belongs in a segment, update that segment's Reference bullets and `Index` count as part of that same task — not a follow-up.
 - **Check staleness before trusting it.** Compare the header's commit against current state. If any file listed under a segment changed since then, re-verify that segment's bullets and knowledge titles before relying on them; mark the Index `Status` column `stale` until re-verified.
-- **Never leave a dead reference.** A bullet pointing at a deleted/renamed file is worse than marking the segment a gap — remove or fix it immediately when noticed, even if that's not the main task.
+- **Never leave a dead reference.** A row pointing at a deleted/renamed file is worse than marking the segment a gap — remove or fix it immediately when noticed, even if that's not the main task.
 - **Full regenerate on explicit request** ("prefactor this repo") or once several segments are marked `stale` — don't let partial patching substitute for a real pass indefinitely.
 
 ## Formatting rules
 
-- Bullets only — no prose paragraphs in any subsection.
-- One file per bullet, one pattern per bullet, one cross-check per bullet. Don't merge multiple facts into a single line.
-- Keep each bullet to one line. If something needs more explanation than that, the explanation belongs in the source file, not in `PREFACTOR.md`.
+- Reference is a table (one row per file); Patterns and Cross-segment check are bullets. No prose paragraphs in any subsection.
+- One file per row, one pattern per bullet, one cross-check per bullet. Don't merge multiple facts into a single row/line.
+- Keep each row/bullet to one line. If something needs more explanation than that, the explanation belongs in the source file, not in `PREFACTOR.md`.
 - Cap "Patterns to learn" at what's actually load-bearing — 3–6 bullets is typical. Needing more usually means the segment is too broad; flag that instead of stuffing the list.
 
 ## What NOT to do
