@@ -8,7 +8,17 @@
       "name": "dev-skills",
       "description": "Skills to help maintain documentation, pre-planning processes, database/repository understanding, and planning with uniformity across code.",
       "source": "./",
-      "strict": false
+      "strict": false,
+      "skills": [
+        "./skills/aise-kaise",
+        "./skills/doc-forge",
+        "./skills/floss",
+        "./skills/mediahead",
+        "./skills/prefactor",
+        "./skills/s-imp",
+        "./skills/sch-said-what",
+        "./skills/topigrasp"
+      ]
     }
   ]
 }
