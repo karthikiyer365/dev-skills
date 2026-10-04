@@ -12,6 +12,7 @@ skills/
 ├── aise-kaise/SKILL.md      product-usage sanity check before locking in a decision
 ├── doc-forge/SKILL.md       audit doc coverage, restructure docs, generate missing ones
 ├── floss/SKILL.md           light targeted code cleanup — hardcoded values, dead code, redundant lines
+├── mediahead/SKILL.md      write posts about your work that reveal the thinking, not the achievement
 ├── prefactor/SKILL.md       map repo docs into a MECE read-this-first navigation tree
 ├── s-imp/SKILL.md           explain systems as flow + action steps, terms calibrated to the reader
 ├── sch-said-what/SKILL.md   look up the real schema before writing DB validation
@@ -23,6 +24,7 @@ skills/
 | `aise-kaise` | Question a decision from a product manager's point of view — does this actually help the user |
 | `doc-forge` | Audit doc coverage against the repo map, fill the gaps from code |
 | `floss` | Small, targeted cleanup pass on just-written code — not a refactor |
+| `mediahead` | Draft a LinkedIn/blog/portfolio post around one realization — hook, spine line, open-question ending |
 | `prefactor` | Know which doc to read before building in an area |
 | `s-imp` | Explain a system without prose walls — flow diagram, action steps, terms matched to what the reader knows |
 | `sch-said-what` | Find the real column type/constraints before validating or writing to the DB |
